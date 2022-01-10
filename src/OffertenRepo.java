@@ -43,7 +43,11 @@ public class OffertenRepo {
         offertenPreis.forEach(offerten -> printWriterPreis.write(offerten.toString() + "\n"));
         printWriterPreis.close();
 
-        //
+        //eine Statistik mit einem Top der Orte nach Einkommen erstellt.
+        // Diese Statistik wird in eine
+        //andere Textdatei mit dem Namen statistik.txt gespeichert.
+
+
 
 
     }
