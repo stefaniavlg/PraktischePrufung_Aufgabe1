@@ -9,6 +9,10 @@ public class OffertenRepo {
 
     private List<Offerten> offertenList = new ArrayList<>();
 
+    /**
+     * READ
+     * @throws FileNotFoundException
+     */
     public void read() throws FileNotFoundException {
         File inputFile = new File("src/files/offerten.txt");
         Scanner reader = new Scanner(inputFile);
@@ -32,15 +36,31 @@ public class OffertenRepo {
         }
     }
 
+    /**
+     * sort offerten + speichern
+     *
+     * @throws IOException
+     */
     public void writeSorted() throws IOException{
 
         //b) offerten nach preis(inkl. mehrwersteure) fallender reihenfolge
         //in datei offertensortiert.txt speichern
+
         FileWriter fileWriterPreis = new FileWriter("src/files/offertensortiert.txt");
         PrintWriter printWriterPreis = new PrintWriter(fileWriterPreis);
+
         List<Offerten> offertenPreis = offertenList; //.stream().filter(offerten -> offerten.getPreis().collect(Collectors.toList());
-        offertenPreis.sort(Comparator.comparing(offertenPreise -> offertenPreise.getPreis(), Collections.reverseOrder()));
+        List<Offerten> offertenMWst = offertenList;
+
+        //Comparator<Offerten> comparator = Comparator.comparing(offerten -> offerten.getPreis());
+        //comparator = comparator.thenComparing(Comparator.comparing(offerten -> offerten.getMehrwertsteuer()));
+
+        //offertenPreis.sort(Comparator.comparing(offertenPreise -> offertenPreise.getPreis(), Collections.reverseOrder()));
+        offertenPreis.sort(Comparator.comparing(offertenMWste->offertenMWste.getMehrwertsteuer(),Collections.reverseOrder()));
+
+//comparator.reversed();
         offertenPreis.forEach(offerten -> printWriterPreis.write(offerten.toString() + "\n"));
+       // offertenPreis.forEach(offerten -> printWriterPreis.write(offerten.toString() + "\n"));
         printWriterPreis.close();
 
         //eine Statistik mit einem Top der Orte nach Einkommen erstellt.
@@ -51,4 +71,34 @@ public class OffertenRepo {
 
 
     }
-}
+
+    /**
+     * Statistik TOP Orte nach Einkommen
+     *
+     * St. Gallen: 65000
+     * Zürich: 55000
+     * Thurgau: 38000
+     *
+     */
+    public void writeStatistik() throws IOException{
+
+
+        FileWriter fileWriterStatistik = new FileWriter("src/files/statistik.txt");
+        PrintWriter printWriterStatistik = new PrintWriter(fileWriterStatistik);
+
+        List<Offerten> offertenOrt = offertenList;
+
+        //Ort[] orte = Ort.values();
+
+
+        //Arrays.stream(orte).filter(o->o.toString().equals("Thurgau"))
+                      //      .forEach(offerten -> printWriterStatistik.write(offerten.toString() + "\n"));
+
+        //List<Offerten> offertenLis= offertenList.stream().distinct().collect(Collectors.toList());
+
+        offertenOrt.sort(Comparator.comparing(offertenOrte->offertenOrte.getPreis(),Collections.reverseOrder()));
+
+        offertenList.forEach(offerten -> printWriterStatistik.write(offerten.getOrt() + ":" + offerten.getPreis()+ "\n"));
+
+        printWriterStatistik.close();
+}}

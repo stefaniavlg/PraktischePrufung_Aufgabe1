@@ -16,6 +16,11 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            offertenController.writeStatistik();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

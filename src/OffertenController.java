@@ -11,4 +11,7 @@ public class OffertenController {
     public void writeSorted() throws IOException {
         offertenRepo.writeSorted();
     }
+    public void writeStatistik() throws IOException {
+        offertenRepo.writeStatistik();
+    }
 }
